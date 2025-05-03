@@ -9,8 +9,6 @@
 
 .authContainer {
     display: flex;
-    justify-content: center;
-    align-items: center;
     border-radius: 20px;
     background-color: #FFFFFF;
     gap: 2rem;

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function LoginForm() {
   return (
-    <main className={styles.authFormContainer}>
+    <section className={styles.authFormContainer}>
       <WelcomePage title="Welcome Back" subtitle="The best invoice reader is ready to help you." />
       <form className={styles.form}>
         <label className={styles.label}>
@@ -24,6 +24,6 @@ export default function LoginForm() {
           Sign Up
         </Link>
       </p>
-    </main>
+    </section>
   );
 }

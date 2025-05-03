@@ -1,4 +1,4 @@
-import LoginForm from "@/components/form/LoginForm";
+import LoginForm from "@/components/auth/LoginForm";
 import styles from "@/app/(public)/page.module.css";
 import Image from "next/image";
 

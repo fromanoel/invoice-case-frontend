@@ -1,0 +1,39 @@
+.userProfileSection{
+    border-bottom: 2px solid rgb(53, 51, 51);
+}
+
+.userProfileContainer h1{
+    text-align: left;
+    font-size: 1rem;
+    padding-left: 1.8rem;
+}
+
+.dropdownMenu{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logoutButton{
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    border-radius: 10px;
+    background-color:rgb(22, 21, 21);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 300;
+    padding: 1rem 0;
+    outline: none;
+    margin-bottom: 1rem;
+}
+
+.logoutButton:hover{
+    background-color: rgb(53, 51, 51);
+    cursor: pointer;
+}
+
+.username{
+    display: flex;
+    justify-content: space-around;
+    cursor: pointer;
+}

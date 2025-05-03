@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function SignUpForm() {
   return (
-    <main className={styles.authFormContainer}>
+    <section className={styles.authFormContainer}>
       <WelcomePage title="Sign Up" subtitle="Start taking control of your invaces." />
       <form className={styles.formContainer}>
         <label className={styles.label}>
@@ -30,6 +30,6 @@ export default function SignUpForm() {
           Login
         </Link>
       </p>
-    </main>
+    </section>
   );
 }
