@@ -15,8 +15,9 @@ export default function LoginForm() {
         <label className={styles.label}>
           <input type="password" className={styles.input} placeholder="Password"/>
         </label>
+        <ButtonForm/>
       </form>
-      <ButtonForm/>
+
 
       <p className={styles.linkText}>
         Don't have an account?{" "}

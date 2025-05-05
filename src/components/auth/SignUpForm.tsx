@@ -3,26 +3,63 @@ import WelcomePage from "./WelcomeMessage";
 import styles from "./FormStyles.module.css";
 import ButtonForm from "./ButtonForm";
 import Link from "next/link";
+import axios from "axios";
 
 export default function SignUpForm() {
+  const handleSubmitSignUp = async (e: any) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    const name = formData.get("name");
+    const username = formData.get("username");
+    const password = formData.get("password");
+    const confirmPassword = formData.get("confirmPassword");
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+    console.log
+    try {
+      const response = await axios.post("http://localhost:3004/user", {
+        name,
+        username,
+        password,
+      }, { withCredentials: true });
+      ;
+      console.log("Signup successful:", response.data);
+      console.log("Cookies:", document.cookie)
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("Signup failed.");
+    }
+  };
+
   return (
     <section className={styles.authFormContainer}>
       <WelcomePage title="Sign Up" subtitle="Start taking control of your invaces." />
-      <form className={styles.formContainer}>
+      <form className={styles.formContainer} onSubmit={handleSubmitSignUp}>
         <label className={styles.label}>
-          <input type="text" className={styles.input} placeholder="Name"/>
+          <input type="text" className={styles.input} name="name" placeholder="Name" />
         </label>
         <label className={styles.label}>
-          <input type="text" className={styles.input} placeholder="Username" />
+          <input type="text" className={styles.input} name="username" placeholder="Username" />
         </label>
         <label className={styles.label}>
-          <input type="password" className={styles.input} placeholder="Password"/>
+          <input type="password" className={styles.input} name="password" placeholder="Password" />
         </label>
         <label className={styles.label}>
-          <input type="password" className={styles.input} placeholder="Confirm your password"/>
+          <input
+            type="password"
+            className={styles.input}
+            name="confirmPassword"
+            placeholder="Confirm your password"
+          />
         </label>
+        <ButtonForm />
       </form>
-      <ButtonForm/>
 
       <p className={styles.linkText}>
         Ready to{" "}

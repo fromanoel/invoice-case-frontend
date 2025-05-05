@@ -17,7 +17,7 @@ export default function UserProfile() {
         <h1>myWebSiteName Dashboard</h1>
         <h2 onClick={toggleMenu} className={styles.username}>
           Welcome, username
-          <FontAwesomeIcon icon={faChevronDown}></FontAwesomeIcon>
+          <FontAwesomeIcon icon={faChevronDown} style={{width: "1.7rem"}}></FontAwesomeIcon>
         </h2>
 
         {isMenuOpen && (
