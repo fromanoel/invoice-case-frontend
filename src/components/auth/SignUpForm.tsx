@@ -4,8 +4,10 @@ import styles from "./FormStyles.module.css";
 import ButtonForm from "./ButtonForm";
 import Link from "next/link";
 import axios from "axios";
-
+import { useRouter } from "next/navigation";
+import axiosInstance from "@/app/_app";
 export default function SignUpForm() {
+  const router = useRouter();
   const handleSubmitSignUp = async (e: any) => {
     e.preventDefault();
 
@@ -21,16 +23,13 @@ export default function SignUpForm() {
       alert("Passwords do not match.");
       return;
     }
-    console.log
     try {
-      const response = await axios.post("http://localhost:3004/user", {
+      const response = await axiosInstance.post("/user", {
         name,
         username,
         password,
-      }, { withCredentials: true });
-      ;
-      console.log("Signup successful:", response.data);
-      console.log("Cookies:", document.cookie)
+      });
+      router.push("/dashboard");
     } catch (error) {
       console.error("Signup error:", error);
       alert("Signup failed.");

@@ -2,7 +2,6 @@ import UserProfile from "./UserProfile";
 import styles from "./invoiceHistory.module.css";
 export default function InvoiceHistory() {
   return (
-    /* Section com o perfil do usuario, logout, e invoices anteriormente enviados*/
     <section className={styles.invoiceHistorySection}>
       <UserProfile />
       <div>
