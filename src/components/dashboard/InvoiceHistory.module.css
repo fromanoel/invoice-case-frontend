@@ -10,9 +10,26 @@
   padding: 1rem 0rem;
 }
 
-.invoiceHistorySection > div > h3 {
-  width: 100%;
-  padding-left: 1.6rem;
+.invoiceHistoryAndButton {
+  border: 2px solid black;
+  display: flex;
+  justify-content: space-around;
+}
+
+.invoiceHistorySection button{
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.invoiceHistorySection button svg{
+  height: 1.8rem;
+}
+
+.invoiceHistorySection button:hover svg {
+  transform: scale(1.4); /* Aumenta o tamanho do ícone em 20% */
+  transition: transform 0.2s ease-in-out; /* Adiciona uma transição suave */
 }
 
 .invoiceHistorySection > div > ul {
@@ -31,4 +48,32 @@
 .invoiceHistorySection > div > ul > li > a {
   text-decoration: none;
   color: white;
+}
+
+
+.uploadButton{
+  display: none !important;
+}
+
+.customFileLabel{
+  border: 1px solid rgb(24, 10, 10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+}
+
+.customFileLabel svg{
+  font-size: 1.5rem; /* Aumenta o tamanho do ícone */
+  width: 1.5rem; /* Ajusta a largura do ícone */
+  cursor: pointer; /* Adiciona o cursor de ponteiro */
+  transition: transform 0.2s ease-in-out;
+}
+
+.customFileLabel svg:hover {
+  transform: scale(1.6); /* Aumenta o tamanho do ícone ao passar o mouse */
+}
+
+.customFileLabel svg:active {
+  transform: scale(1.6); /* Reduz ligeiramente o tamanho ao clicar */
 }
