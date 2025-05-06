@@ -3,46 +3,41 @@ import InvoiceHistory from "@/components/dashboard/InvoiceHistory";
 import UploadInvoice from "@/components/dashboard/UploadInvoice";
 import { useState } from "react";
 import styles from "@/app/(private)/dashboard/page.module.css";
-import axiosInstance from "@/app/_app"; 
+import axiosInstance from "@/app/_app";
 
 export default function Dashboard() {
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [isFileUploaded, setIsFileUploaded] = useState<boolean>(false);
-  const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
+  const [selectedInvoice, setSelectedInvoice] = useState<{
+    id: string;
+    originalName: string;
+    filePath: string;
+  } | null>(null);
 
-  const handleFileChange = (file: File | null) => {
-    if (file) {
-      const allowedTypes = ["image/png", "image/svg+xml", "image/jpg", "image/jpeg"];
-      if (!allowedTypes.includes(file.type)) {
-        return console.log("Tipo de arquivo não aceito!");
-      }
-      setImagePreview(URL.createObjectURL(file));
-      setIsFileUploaded(true);
+  const [invoices, setInvoices] = useState<{ id: string; originalName: string }[]>([]);
 
-      handleFileUpload(file); // Envia ao backend após validação
-    } else {
-      setImagePreview(null);
-      setIsFileUploaded(false);
-    }
-  };
+  const handleFileChange = async (file: File | null) => {
+    if (!file) return;
 
-  const handleFileUpload = async (file: File) => {
+    // Faz o upload do arquivo para o backend
+    const formData = new FormData();
+    formData.append("file", file);
+
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-
       const response = await axiosInstance.post("/document/upload-image", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      console.log("Resposta do backend:", response.data);
+      // Atualiza o estado local de invoices com o novo arquivo
+      const newInvoice = {
+        id: response.data.id, // ID retornado pelo backend
+        originalName: response.data.originalName, // Nome original do arquivo
+        filePath: response.data.filePath, // Caminho do arquivo
+      };
 
-      // Atualiza a InvoiceHistory depois que o upload termina
-      setRefreshTrigger(prev => prev + 1);
+      setInvoices((prevInvoices) => [...prevInvoices, newInvoice]); // Adiciona o novo arquivo ao estado
     } catch (error) {
-      console.error("Erro ao enviar o arquivo:", error);
+      console.error("Erro ao fazer upload do arquivo:", error);
     }
   };
 
@@ -50,9 +45,9 @@ export default function Dashboard() {
     <div className={styles.invoiceMainContainer}>
       <InvoiceHistory
         onFileChange={handleFileChange}
-        refreshTrigger={refreshTrigger} // força atualização do filho
+        onSelectInvoice={setSelectedInvoice} // Passa a função para selecionar o documento
       />
-      <UploadInvoice imagePreview={imagePreview} isFileUploaded={isFileUploaded} />
+      <UploadInvoice selectedInvoice={selectedInvoice} />
     </div>
   );
 }

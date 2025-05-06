@@ -8,12 +8,12 @@ import { useEffect, useState } from "react";
 
 export default function InvoiceHistory({
   onFileChange,
-  refreshTrigger,
+  onSelectInvoice,
 }: {
   onFileChange: (file: File | null) => void;
-  refreshTrigger: number;
+  onSelectInvoice: (invoice: { id: string; originalName: string; filePath: string }) => void;
 }) {
-  const [invoices, setInvoices] = useState<{ id: string; originalName: string }[]>([]);
+  const [invoices, setInvoices] = useState<{ id: string; originalName: string; filePath: string }[]>([]);
 
   const getInvoices = async () => {
     try {
@@ -21,6 +21,7 @@ export default function InvoiceHistory({
       setInvoices(response.data.map((invoice: any) => ({
         id: invoice.id,
         originalName: invoice.originalName,
+        filePath: invoice.filePath, 
       })));
     } catch (error) {
       console.error("Erro ao buscar invoices:", error);
@@ -29,11 +30,11 @@ export default function InvoiceHistory({
 
   useEffect(() => {
     getInvoices();
-  }, [refreshTrigger]); // Atualiza apenas quando refreshTrigger mudar
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
-    onFileChange(file); 
+    onFileChange(file);
   };
 
   return (
@@ -54,8 +55,8 @@ export default function InvoiceHistory({
           </label>
         </div>
         <ul>
-          {invoices.map((invoice, index) => (
-            <li key={invoice.id || index}>
+          {invoices.map((invoice) => (
+            <li key={invoice.id} onClick={() => onSelectInvoice(invoice)}>
               <a href="#">{invoice.originalName}</a>
             </li>
           ))}
@@ -64,4 +65,3 @@ export default function InvoiceHistory({
     </section>
   );
 }
-

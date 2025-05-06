@@ -5,17 +5,28 @@
   color: white;
 }
 
-.uploadInvoiceSection > h3 {
-  margin: 0;
-  flex: 1;
+.headerContainer  {
+  border: 2px solid purple;
   display: flex;
+  flex-direction: row;
+  flex: 1.12;
+  justify-content: space-between;
   align-items: center;
-  font-size: 1.5rem;
-  font-weight: 400;
-  border-bottom: 2px solid rgb(53, 51, 51);
-  padding-left: 2rem;
-  padding-top: 0.3rem;
-  padding-bottom: 0.5rem;
+  padding: 0 2rem;
+}
+
+.headerContainer h3{
+  font-size: 1.6rem;
+}
+
+.headerContainer button{
+  background-color: #080507;
+  color: white;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  padding: 1.5rem 1.5rem;
+  border: none;
+  cursor: pointer;
 }
 
 .uploadInvoiceResult {
@@ -141,6 +152,7 @@
   margin-bottom: 2rem;
   word-break: break-word;
   border-radius: 10px;
+  animation: fadeIn 0.5s ease-in-out; /* Aplica a animação */
 }
 
 .chatContainer > p {
@@ -157,6 +169,7 @@
 .iaMessage {
   align-self: flex-start;
   background-color: #3b3939;
+  word-wrap: break-word;
 }
 
 /* Alinha à direita (Usuário) */
@@ -196,4 +209,16 @@
 /* Estiliza o "polegar" ao passar o mouse */
 .divSecundaria::-webkit-scrollbar-thumb:hover {
   background: #555; /* Cor do polegar ao passar o mouse */
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px); /* Move a mensagem para baixo */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* Mensagem na posição final */
+  }
 }
