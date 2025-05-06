@@ -45,3 +45,12 @@
   .link:hover {
     text-decoration: underline;
   }
+
+  .errorText {
+    width: 300px; /* Largura fixa */
+    height: 40px; /* Altura fixa */
+    text-align: left; /* Centraliza o texto horizontalmente */
+    background-color: white; /* Fundo branco */
+    color: red; /* Cor do texto */
+    font-size: 0.8rem; /* Tamanho da fonte */
+  }

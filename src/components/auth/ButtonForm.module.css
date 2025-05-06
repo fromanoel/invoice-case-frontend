@@ -1,6 +1,5 @@
 .buttonForm{
-    margin-top: 4rem;
-    background-color: rgb(207, 23, 115);
+    background-color: #f0921f;
     color: white;
     font-weight: 500;
     padding: 1rem 4rem;
@@ -8,10 +7,11 @@
     border-radius: 10px;
     font-size: 1.4rem;
     transition: background-color 0.3s ease;
+    margin-bottom: 1rem;
 }
 
 .buttonForm:hover{
-    background-color: rgb(206, 75, 151);
+    background-color: #b36607;
     color: white;
     font-weight: 500;
     padding: 1rem 4rem;

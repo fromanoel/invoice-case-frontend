@@ -5,8 +5,12 @@ import ButtonForm from "./ButtonForm";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/app/_app";
+import { useState } from "react";
+
+
 export default function LoginForm() {
   const router = useRouter();
+  const [authenticationError, setAuthenticationError] = useState<string>("");
   const handleSubmitLogin = async (e: any) => {
     e.preventDefault();
 
@@ -17,13 +21,18 @@ export default function LoginForm() {
     const password = formData.get("password");
 
     try{
+
       const response = await axiosInstance.post("/login", {
         username,
         password
       });
       router.push("/dashboard");
-    } catch (error){
-      console.log("Login error: ", error);
+    } catch (error : any){
+      if (error.response && error.response.status === 401) {
+        setAuthenticationError("Invalid username or password.");
+      } else {
+        setAuthenticationError("An unexpected error occurred. Please try again.");
+      }
     }
     
   };
@@ -37,6 +46,11 @@ export default function LoginForm() {
         <label className={styles.label}>
           <input type="password" className={styles.input} name="password" placeholder="Password"/>
         </label>
+        {authenticationError ? (
+          <p className={styles.errorText}>{authenticationError}</p>
+        ) : (
+          <p className={styles.errorText}>&nbsp;</p> // Espaço em branco para manter o layout
+        )}
         <ButtonForm/>
       </form>
 
