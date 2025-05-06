@@ -33,7 +33,7 @@ export default function UserProfile() {
     const fetchUser = async () => {
       try {
         const res = await axiosInstance.get("/user/me");
-        const fullName = res.data;
+        const fullName = res.data.name;
         const first = fullName?.split(" ")[0];
         setFirstName(first); // Atualiza o estado com o primeiro nome
       } catch (err) {

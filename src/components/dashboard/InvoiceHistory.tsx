@@ -3,11 +3,37 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserProfile from "./UserProfile";
 import styles from "./invoiceHistory.module.css";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import axiosInstance from "@/app/_app";
+import { useEffect, useState } from "react";
 
-export default function InvoiceHistory({ onFileChange }: { onFileChange: (file: File | null) => void }) {
+export default function InvoiceHistory({
+  onFileChange,
+  refreshTrigger,
+}: {
+  onFileChange: (file: File | null) => void;
+  refreshTrigger: number;
+}) {
+  const [invoices, setInvoices] = useState<{ id: string; originalName: string }[]>([]);
+
+  const getInvoices = async () => {
+    try {
+      const response = await axiosInstance.get("/document");
+      setInvoices(response.data.map((invoice: any) => ({
+        id: invoice.id,
+        originalName: invoice.originalName,
+      })));
+    } catch (error) {
+      console.error("Erro ao buscar invoices:", error);
+    }
+  };
+
+  useEffect(() => {
+    getInvoices();
+  }, [refreshTrigger]); // Atualiza apenas quando refreshTrigger mudar
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
-    onFileChange(file); // Atualiza o estado no componente pai
+    onFileChange(file); 
   };
 
   return (
@@ -28,17 +54,14 @@ export default function InvoiceHistory({ onFileChange }: { onFileChange: (file: 
           </label>
         </div>
         <ul>
-          <li>
-            <a href="#">Invoice 1</a>
-          </li>
-          <li>
-            <a href="#">Invoice 2</a>
-          </li>
-          <li>
-            <a href="#">Invoice 3</a>
-          </li>
+          {invoices.map((invoice, index) => (
+            <li key={invoice.id || index}>
+              <a href="#">{invoice.originalName}</a>
+            </li>
+          ))}
         </ul>
       </div>
     </section>
   );
 }
+

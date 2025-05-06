@@ -8,6 +8,7 @@ import axiosInstance from "@/app/_app";
 export default function Dashboard() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isFileUploaded, setIsFileUploaded] = useState<boolean>(false);
+  const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
 
   const handleFileChange = (file: File | null) => {
     if (file) {
@@ -17,6 +18,8 @@ export default function Dashboard() {
       }
       setImagePreview(URL.createObjectURL(file));
       setIsFileUploaded(true);
+
+      handleFileUpload(file); // Envia ao backend após validação
     } else {
       setImagePreview(null);
       setIsFileUploaded(false);
@@ -26,15 +29,18 @@ export default function Dashboard() {
   const handleFileUpload = async (file: File) => {
     try {
       const formData = new FormData();
-      formData.append("file", file); 
+      formData.append("file", file);
 
       const response = await axiosInstance.post("/document/upload-image", formData, {
         headers: {
-          "Content-Type": "multipart/form-data", // Necessário para upload de arquivos
+          "Content-Type": "multipart/form-data",
         },
       });
 
       console.log("Resposta do backend:", response.data);
+
+      // Atualiza a InvoiceHistory depois que o upload termina
+      setRefreshTrigger(prev => prev + 1);
     } catch (error) {
       console.error("Erro ao enviar o arquivo:", error);
     }
@@ -43,10 +49,8 @@ export default function Dashboard() {
   return (
     <div className={styles.invoiceMainContainer}>
       <InvoiceHistory
-        onFileChange={(file) => {
-          handleFileChange(file);
-          if (file) handleFileUpload(file); // Envia o arquivo ao backend
-        }}
+        onFileChange={handleFileChange}
+        refreshTrigger={refreshTrigger} // força atualização do filho
       />
       <UploadInvoice imagePreview={imagePreview} isFileUploaded={isFileUploaded} />
     </div>
