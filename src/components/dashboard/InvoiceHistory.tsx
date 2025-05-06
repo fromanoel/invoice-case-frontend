@@ -3,34 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserProfile from "./UserProfile";
 import styles from "./invoiceHistory.module.css";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import axiosInstance from "@/app/_app";
-import { useEffect, useState } from "react";
 
 export default function InvoiceHistory({
   onFileChange,
   onSelectInvoice,
+  invoices = [],
 }: {
   onFileChange: (file: File | null) => void;
   onSelectInvoice: (invoice: { id: string; originalName: string; filePath: string }) => void;
+  invoices?: { id: string; originalName: string; filePath: string }[];
 }) {
-  const [invoices, setInvoices] = useState<{ id: string; originalName: string; filePath: string }[]>([]);
 
-  const getInvoices = async () => {
-    try {
-      const response = await axiosInstance.get("/document");
-      setInvoices(response.data.map((invoice: any) => ({
-        id: invoice.id,
-        originalName: invoice.originalName,
-        filePath: invoice.filePath, 
-      })));
-    } catch (error) {
-      console.error("Erro ao buscar invoices:", error);
-    }
-  };
-
-  useEffect(() => {
-    getInvoices();
-  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
@@ -55,11 +38,15 @@ export default function InvoiceHistory({
           </label>
         </div>
         <ul>
-          {invoices.map((invoice) => (
-            <li key={invoice.id} onClick={() => onSelectInvoice(invoice)}>
-              <a href="#">{invoice.originalName}</a>
-            </li>
-          ))}
+          {invoices.length > 0 ? (
+            invoices.map((invoice) => (
+              <li key={invoice.id} onClick={() => onSelectInvoice(invoice)}>
+                <a href="#">{invoice.originalName}</a>
+              </li>
+            ))
+          ) : (
+            <li>No invoices available.</li> // Mensagem caso não haja invoices
+          )}
         </ul>
       </div>
     </section>
