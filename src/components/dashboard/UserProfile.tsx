@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import styles from "./userProfile.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import axiosInstance from "@/app/_app";
@@ -51,7 +51,7 @@ export default function UserProfile() {
         <h1>myWebSiteName Dashboard</h1>
         <h2 onClick={toggleMenu} className={styles.username}>
           Welcome, {firstName}
-          <FontAwesomeIcon icon={faChevronDown} style={{ width: "1.7rem" }}></FontAwesomeIcon>
+          <FontAwesomeIcon  icon={isMenuOpen ? faChevronUp : faChevronDown}  style={{ width: "1.7rem" }}></FontAwesomeIcon>
         </h2>
 
         {isMenuOpen && (

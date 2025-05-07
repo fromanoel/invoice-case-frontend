@@ -203,19 +203,19 @@
 
 /* Estiliza o fundo da barra de rolagem */
 .divSecundaria::-webkit-scrollbar-track {
-  background: #888;
+  background: #161a20;
   border-radius: 10px; 
 }
 
 /* Estiliza o "polegar" da barra de rolagem */
 .divSecundaria::-webkit-scrollbar-thumb {
-  background: #a78046; 
+  background: #5f4929;
   border-radius: 10px; 
 }
 
 /* Estiliza o "polegar" ao passar o mouse */
 .divSecundaria::-webkit-scrollbar-thumb:hover {
-  background: #866738;
+  background: #352917;
 }
 
 
