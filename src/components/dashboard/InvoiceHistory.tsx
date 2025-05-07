@@ -1,7 +1,7 @@
 "use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserProfile from "./UserProfile";
-import styles from "./invoiceHistory.module.css";
+import styles from "./InvoiceHistory.module.css";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function InvoiceHistory({
