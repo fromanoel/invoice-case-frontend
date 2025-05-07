@@ -17,24 +17,28 @@ export default function LoginForm() {
     const form = e.target;
     const formData = new FormData(form);
 
-    const username = formData.get("username");
-    const password = formData.get("password");
+    const username = formData.get("username") as string;
+    const password = formData.get("password") as string;
 
-    try{
 
+    if (!username || !password) {
+      setAuthenticationError("All fields are required.");
+      return; 
+    }
+
+    try {
       const response = await axiosInstance.post("/login", {
         username,
-        password
+        password,
       });
       router.push("/dashboard");
-    } catch (error : any){
+    } catch (error: any) {
       if (error.response && error.response.status === 401) {
         setAuthenticationError("Invalid username or password.");
       } else {
         setAuthenticationError("An unexpected error occurred. Please try again.");
       }
     }
-    
   };
   return (
     <section className={styles.authFormContainer}>
