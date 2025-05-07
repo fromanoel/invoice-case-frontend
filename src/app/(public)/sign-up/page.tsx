@@ -7,7 +7,7 @@ export default function SignUp() {
     <main className={styles.authPage}>
       <div className={styles.authContainer}>
         <SignUpForm />
-        <Image src="/illustrationInvoice.jpg" alt="Illustration" width={400} height={600}/>
+        <Image src="/illustrationInvoice.jpg" alt="Illustration of a woman reading invoices" width={400} height={600}/>
       </div>
     </main>
   );
