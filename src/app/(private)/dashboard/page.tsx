@@ -4,11 +4,25 @@ import UploadInvoice from "@/components/dashboard/UploadInvoice";
 import { useEffect, useState } from "react";
 import styles from "@/app/(private)/dashboard/page.module.css";
 import axiosInstance from "@/app/_app";
+import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
+  const router = useRouter();
+
   useEffect(() => {
+    checkAuthentication();
     getInvoices(); // <- Chamada inicial para buscar invoices
   }, []);
+
+  const checkAuthentication = async () => {
+    try {
+      await axiosInstance.get("/verifyToken"); // Endpoint para validar os cookies
+    } catch (error) {
+      console.error("User not authenticated:", error);
+      router.push("/"); // Redireciona para a página de login
+    }
+  };
+
 
   const [selectedInvoice, setSelectedInvoice] = useState<{
     id: string;

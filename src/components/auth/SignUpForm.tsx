@@ -71,6 +71,7 @@ export default function SignUpForm() {
         username,
         password,
       });
+      console.log("tenta novamente");
       router.push("/dashboard");
     } catch (error) {
       console.error("Signup error:", error);

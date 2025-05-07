@@ -30,6 +30,7 @@ export default function LoginForm() {
         username,
         password,
       });
+      
       router.push("/dashboard");
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response?.status === 401) {
