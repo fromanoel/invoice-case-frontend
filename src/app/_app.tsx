@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3004",
+  baseURL: "https://invoice-case-backend.onrender.com",
   withCredentials: true,
 });
 
@@ -13,7 +13,7 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const response = await axios.post("http://localhost:3004/refresh", null, {withCredentials: true});
+        const response = await axios.post("https://invoice-case-backend.onrender.com/refresh", null, {withCredentials: true});
 
         if (response.status === 200 || response.status === 201) {
           return axiosInstance(originalRequest);

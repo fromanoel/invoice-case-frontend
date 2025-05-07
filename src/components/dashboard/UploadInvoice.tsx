@@ -44,7 +44,7 @@ export default function UploadInvoice({
 
     // Adiciona a imagem do documento
     const image = new Image();
-    image.src = `http://localhost:3004/${selectedInvoice.filePath}`;
+    image.src = `https://invoice-case-backend.onrender.com/${selectedInvoice.filePath}`;
 
     image.onload = async () => {
       // Calcula a proporção da imagem
@@ -233,7 +233,7 @@ export default function UploadInvoice({
           <div className={styles.divSecundaria} ref={divSecundariaRef}>
             <div className={styles.imageDiv}>
               <img
-                src={`http://localhost:3004/${selectedInvoice.filePath}`} // Exibe a imagem do documento selecionado
+                src={`https://invoice-case-backend.onrender.com/${selectedInvoice.filePath}`} // Exibe a imagem do documento selecionado
                 alt={selectedInvoice.originalName}
                 className={styles.previewImage}
               />
