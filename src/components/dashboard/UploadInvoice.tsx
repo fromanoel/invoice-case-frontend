@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./UploadInvoice.module.css";
 import axiosInstance from "@/app/_app";
 import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
 
 export default function UploadInvoice({
   selectedInvoice,
@@ -125,8 +124,13 @@ export default function UploadInvoice({
 
           setExtractedText(extractedText || "");
 
+          type Interaction = {
+            question: string;
+            answer: string;
+          };
+
           const mappedInteractions = interactions.flatMap(
-            (interaction: any) => [
+            (interaction: Interaction) => [
               { type: "question", content: interaction.question },
               { type: "answer", content: interaction.answer },
             ]

@@ -4,7 +4,6 @@ import styles from "./UserProfile.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import axiosInstance from "@/app/_app";
 
 export default function UserProfile() {
@@ -16,13 +15,11 @@ export default function UserProfile() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleSubmitLogout = async (e: any) => {
+  const handleSubmitLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
       const response = await axiosInstance.post("/logout", null);
-      console.log("Logout Sucessful: ", response.data);
-    
-      
+      console.log("Logout Successful: ", response.data);
       router.push("/");
     } catch (error) {
       console.error("Logout error: ", error);

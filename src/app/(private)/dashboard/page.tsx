@@ -18,12 +18,18 @@ export default function Dashboard() {
 
   const [invoices, setInvoices] = useState<{ id: string; originalName: string; filePath: string }[]>([]);
 
+  type Invoice = {
+    id: string;
+    originalName: string;
+    filePath: string;
+  };
+
 
   const getInvoices = async () => {
     try {
       const response = await axiosInstance.get("/document");
       setInvoices(
-        response.data.map((invoice: any) => ({
+        response.data.map((invoice: Invoice) => ({
           id: invoice.id,
           originalName: invoice.originalName,
           filePath: invoice.filePath,
@@ -52,19 +58,9 @@ export default function Dashboard() {
         }
       );
 
-      // Atualiza o estado local de invoices com o novo arquivo
-      const newInvoice = {
-        id: response.data.id, // ID retornado pelo backend
-        originalName: response.data.originalName, // Nome original do arquivo
-        filePath: response.data.filePath, // Caminho do arquivo
-      };
-
-      console.log("responsedataid ",response.data.id);
-
       await getInvoices();
       try{
         const res = await axiosInstance.get(`/document/${response.data.id}/interaction`)
-        console.log("res data ", res.data);
         setSelectedInvoice(res.data);
       }
      catch (error) {

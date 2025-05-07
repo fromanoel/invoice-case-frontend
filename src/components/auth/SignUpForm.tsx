@@ -3,17 +3,16 @@ import WelcomePage from "./WelcomeMessage";
 import styles from "./FormStyles.module.css";
 import ButtonForm from "./ButtonForm";
 import Link from "next/link";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/app/_app";
 import { useState } from "react";
 export default function SignUpForm() {
   const router = useRouter();
   const [authenticationError, setAuthenticationError] = useState<string>("");
-  const handleSubmitSignUp = async (e: any) => {
+  const handleSubmitSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const form = e.target;
+    const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
 
     const name = formData.get("name") as string;
@@ -67,7 +66,7 @@ export default function SignUpForm() {
     }
 
     try {
-      const response = await axiosInstance.post("/user", {
+      await axiosInstance.post("/user", {
         name,
         username,
         password,
