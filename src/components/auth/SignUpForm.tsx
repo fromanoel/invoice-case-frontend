@@ -62,7 +62,7 @@ export default function SignUpForm() {
     } 
 
     if (password !== confirmPassword) {
-      setAuthenticationError("Username or password invalid.");
+      setAuthenticationError("Passwords do not match.");
       return;
     }
 

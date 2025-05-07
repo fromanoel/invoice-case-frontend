@@ -10,11 +10,13 @@ export default function InvoiceHistory({
   invoices = [],
 }: {
   onFileChange: (file: File | null) => void;
-  onSelectInvoice: (invoice: { id: string; originalName: string; filePath: string }) => void;
+  onSelectInvoice: (invoice: {
+    id: string;
+    originalName: string;
+    filePath: string;
+  }) => void;
   invoices?: { id: string; originalName: string; filePath: string }[];
 }) {
-
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     onFileChange(file);
@@ -37,17 +39,23 @@ export default function InvoiceHistory({
             <FontAwesomeIcon icon={faPlus} />
           </label>
         </div>
-        <ul>
-          {invoices.length > 0 ? (
-            invoices.map((invoice) => (
-              <li key={invoice.id} onClick={() => onSelectInvoice(invoice)}>
-                <a href="#">{invoice.originalName}</a>
-              </li>
-            ))
-          ) : (
-            <li>No invoices available.</li> // Mensagem caso não haja invoices
-          )}
-        </ul>
+        <div className={styles.invoiceListContainer}>
+          <ul>
+            {invoices.length > 0 ? (
+              invoices.map((invoice) => (
+                <li key={invoice.id} onClick={() => onSelectInvoice(invoice)}>
+                  <a href="#">
+                    {invoice.originalName.length > 20
+                      ? `${invoice.originalName.slice(0, 24)}...`
+                      : invoice.originalName}
+                  </a>
+                </li>
+              ))
+            ) : (
+              <li>No invoices available.</li> // Mensagem caso não haja invoices
+            )}
+          </ul>
+        </div>
       </div>
     </section>
   );

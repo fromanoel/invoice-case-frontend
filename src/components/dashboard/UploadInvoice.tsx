@@ -215,7 +215,7 @@ export default function UploadInvoice({
   return (
     <section className={styles.uploadInvoiceSection}>
       <div className={styles.headerContainer}>
-        <h3>Current Invoice</h3>
+        <h3>{selectedInvoice ? selectedInvoice.originalName : "Current Invoice"}</h3>
         {selectedInvoice && (
           <button className={styles.downloadButton} onClick={generatePDF}>
             Download
@@ -232,7 +232,9 @@ export default function UploadInvoice({
                 alt={selectedInvoice.originalName}
                 className={styles.previewImage}
               />
-              <p className="extractedText">{extractedText}</p>{" "}
+              <div className={`${styles.chatContainer} ${styles.iaMessage}`}>
+                <p>{extractedText}</p>
+              </div>
               {/* Exibe o texto extraído */}
             </div>
             {Array.isArray(interactions) &&
@@ -245,8 +247,7 @@ export default function UploadInvoice({
                       : styles.userMessage
                   }`}
                 >
-                  <p>{interaction.displayedContent || interaction.content}</p>{" "}
-                  {/* Exibe o conteúdo da interação */}
+                  <p>{interaction.displayedContent || interaction.content}</p>
                 </div>
               ))}
           </div>

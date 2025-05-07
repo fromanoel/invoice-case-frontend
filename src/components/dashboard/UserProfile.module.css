@@ -15,14 +15,13 @@
 }
 .logoutButton{
     display: flex;
-    width: 80%;
     justify-content: center;
     border-radius: 10px;
-    background-color:rgb(22, 21, 21);
+    background-color:rgb(69, 150, 116);
     color: white;
     font-size: 1.2rem;
     font-weight: 300;
-    padding: 1rem 0;
+    padding: 1rem 2rem;
     outline: none;
     margin-bottom: 1rem;
 }

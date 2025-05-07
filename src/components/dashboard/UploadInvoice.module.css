@@ -20,12 +20,18 @@
 }
 
 .headerContainer button{
-  background-color: #080507;
+  background-color: #f0921f;
   color: white;
   font-size: 1.2rem;
   border-radius: 10px;
   padding: 1.5rem 1.5rem;
   border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.headerContainer button:hover{
+  background-color: #b36607;
   cursor: pointer;
 }
 
@@ -73,7 +79,7 @@
   height: 90%;
   outline: none;
   border-radius: 20px;
-  background-color: rgb(73, 71, 71);
+  background-color: #222831;
   border: none;
   font-size: 1.2rem;
   color: whitesmoke;
@@ -99,7 +105,7 @@
   padding: 0.8rem 2rem;
   font-size: 1.5rem;
   cursor: pointer;
-  background-color: #cf1773;
+  background-color: #f0921f;
   color: white;
   border: none;
   border-radius: 10px;
@@ -116,13 +122,14 @@
   font-size: 1.4rem;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  background-color: #cf1773;
+  background-color: #f0921f;
   color: white;
   border: none;
+  transition: background-color 0.3s ease;
 }
 
 .sendButton:hover {
-  background-color: #ce4b97;
+  background-color: #b36607;
   cursor: pointer;
 }
 
@@ -130,7 +137,7 @@
   text-align: right;
 }
 .previewImage {
-  max-width: 40%;
+  max-width: 30%;
   max-height: auto;
   margin-top: 10px;
   margin-bottom: 1rem;
@@ -191,24 +198,24 @@
 /* Estiliza barra de rolagem para o chat */
 /* Estiliza a barra de rolagem */
 .divSecundaria::-webkit-scrollbar {
-  width: 15px; /* Largura da barra de rolagem */
+  width: 15px;
 }
 
 /* Estiliza o fundo da barra de rolagem */
 .divSecundaria::-webkit-scrollbar-track {
-  background: #888; /* Cor do polegar */
-  border-radius: 10px; /* Bordas arredondadas */
+  background: #888;
+  border-radius: 10px; 
 }
 
 /* Estiliza o "polegar" da barra de rolagem */
 .divSecundaria::-webkit-scrollbar-thumb {
-  background: #816060; /* Cor do polegar */
-  border-radius: 10px; /* Bordas arredondadas */
+  background: #a78046; 
+  border-radius: 10px; 
 }
 
 /* Estiliza o "polegar" ao passar o mouse */
 .divSecundaria::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Cor do polegar ao passar o mouse */
+  background: #866738;
 }
 
 
