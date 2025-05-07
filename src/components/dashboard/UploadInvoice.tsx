@@ -29,48 +29,49 @@ export default function UploadInvoice({
 
   const generatePDF = async () => {
     if (!selectedInvoice) return;
-  
+
     const doc = new jsPDF();
     let yPosition = 10; // Posição inicial no PDF
     const pageHeight = 280; // Altura máxima da página antes de adicionar uma nova
     const margin = 10; // Margem de 10 unidades da esquerda
     const maxWidth = 180; // Largura máxima para a imagem (ajuste conforme necessário)
     const maxTextWidth = maxWidth; // Largura máxima para o texto (ajustado para o mesmo valor da imagem, mas pode ser alterado)
-  
+
     // Adiciona o título
     doc.setFontSize(16);
     doc.text("Invoice Details", 10, yPosition);
     yPosition += 10;
-  
+
     // Adiciona a imagem do documento
     const image = new Image();
     image.src = `http://localhost:3004/${selectedInvoice.filePath}`;
-  
+
     image.onload = async () => {
       // Calcula a proporção da imagem
       const aspectRatio = image.height / image.width;
       // Calcula a altura proporcional com base na largura máxima
       const scaledHeight = maxWidth * aspectRatio;
-  
+
       // Adiciona a imagem ao PDF com a largura ajustada e a altura proporcional
       doc.addImage(image, "JPEG", margin, yPosition, maxWidth, scaledHeight);
-  
+
       yPosition += scaledHeight + 10; // Ajusta a posição vertical para o próximo conteúdo
-  
+
       // Adiciona o texto extraído com espaçamento entre linhas
       doc.setFontSize(12);
       doc.text("Extracted Text:", 10, yPosition);
       yPosition += 10;
-  
+
       const lines = (extractedText || "").split("\n");
       lines.forEach((line) => {
         if (line.trim() === "") return; // Ignora linhas vazias
-  
-        if (yPosition > pageHeight) { // Limite da página
+
+        if (yPosition > pageHeight) {
+          // Limite da página
           doc.addPage();
           yPosition = 10; // Reinicia a posição no topo da nova página
         }
-  
+
         // Usa splitTextToSize para quebrar o texto corretamente
         const splitText = doc.splitTextToSize(line, maxTextWidth);
         splitText.forEach((textLine: string | string[]) => {
@@ -78,38 +79,40 @@ export default function UploadInvoice({
           yPosition += 8; // Espaçamento entre as linhas
         });
       });
-  
+
       // Adiciona as interações (perguntas e respostas)
       doc.text("Interactions:", 10, yPosition);
       yPosition += 10;
-  
+
       interactions.forEach((interaction) => {
         const interactionLines = interaction.content.split("\n"); // Divide o conteúdo em linhas
         interactionLines.forEach((line) => {
           if (line.trim() === "") return; // Ignora linhas vazias
-  
-          if (yPosition > pageHeight) { // Limite da página
+
+          if (yPosition > pageHeight) {
+            // Limite da página
             doc.addPage();
             yPosition = 10; // Reinicia a posição no topo da nova página
           }
-  
+
           // Adiciona Q: para perguntas e A: para respostas
           const prefix = interaction.type === "question" ? "Q:" : "A:";
-          const splitInteraction = doc.splitTextToSize(`${prefix} ${line}`, maxTextWidth);
-  
+          const splitInteraction = doc.splitTextToSize(
+            `${prefix} ${line}`,
+            maxTextWidth
+          );
+
           splitInteraction.forEach((textLine: string | string[]) => {
             doc.text(textLine, 10, yPosition);
             yPosition += 8; // Espaçamento entre as linhas
           });
         });
       });
-  
+
       // Salva o PDF
       doc.save(`${selectedInvoice.originalName}.pdf`);
     };
-  };  
-  
-  
+  };
 
   useEffect(() => {
     const fetchDocumentWithInteractions = async () => {
@@ -120,7 +123,7 @@ export default function UploadInvoice({
           );
           const { extractedText, interactions } = response.data;
 
-          setExtractedText(extractedText || ""); 
+          setExtractedText(extractedText || "");
 
           const mappedInteractions = interactions.flatMap(
             (interaction: any) => [
@@ -129,7 +132,7 @@ export default function UploadInvoice({
             ]
           );
 
-          setInteractions(mappedInteractions || []); 
+          setInteractions(mappedInteractions || []);
         } catch (error) {
           console.error("Erro ao buscar documento com interações:", error);
           setExtractedText(null);
@@ -215,7 +218,9 @@ export default function UploadInvoice({
   return (
     <section className={styles.uploadInvoiceSection}>
       <div className={styles.headerContainer}>
-        <h3>{selectedInvoice ? selectedInvoice.originalName : "Current Invoice"}</h3>
+        <h3>
+          {selectedInvoice ? selectedInvoice.originalName : "Current Invoice"}
+        </h3>
         {selectedInvoice && (
           <button className={styles.downloadButton} onClick={generatePDF}>
             Download
@@ -263,15 +268,22 @@ export default function UploadInvoice({
           <textarea
             className={styles.uploadInvoiceTextarea}
             placeholder="Write a message..."
-            value={newMessage} // Controla o valor do textarea
-            onChange={(e) => setNewMessage(e.target.value)} // Atualiza o estado ao digitar
-            disabled={!selectedInvoice || isLoading} // Desabilita se nenhum documento estiver selecionado ou se estiver carregando
+            value={newMessage} 
+            onChange={(e) => setNewMessage(e.target.value)} 
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                // Verifica se a tecla "Enter" foi pressionada sem "Shift"
+                e.preventDefault(); 
+                handleSendMessage(); 
+              }
+            }}
+            disabled={!selectedInvoice || isLoading} 
           ></textarea>
         </label>
         <button
           className={styles.sendButton}
-          onClick={handleSendMessage} // Envia a mensagem ao clicar no botão
-          disabled={!selectedInvoice || !newMessage.trim() || isLoading} // Desabilita se não houver mensagem, documento selecionado ou se estiver carregando
+          onClick={handleSendMessage} 
+          disabled={!selectedInvoice || !newMessage.trim() || isLoading} 
         >
           Send
         </button>
