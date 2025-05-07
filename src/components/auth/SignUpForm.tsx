@@ -66,6 +66,7 @@ export default function SignUpForm() {
     }
 
     try {
+      setAuthenticationError("Creating user...");
       await axiosInstance.post("/user", {
         name,
         username,
@@ -119,7 +120,15 @@ export default function SignUpForm() {
           />
         </label>
         {authenticationError ? (
-          <p className={styles.errorText}>{authenticationError}</p>
+            <p
+            className={
+              authenticationError === "Creating user..."
+                ? styles.creatingUserText
+                : styles.errorText
+            }
+          >
+            {authenticationError}
+          </p>
         ) : (
           <p className={styles.errorText}>&nbsp;</p> // Espaço em branco para manter o layout
         )}
